@@ -2,6 +2,8 @@ package dev.luiztm.wlshop.data.repositories
 
 import dev.luiztm.wlshop.data.datasources.WLShopLocalDataSource
 import dev.luiztm.wlshop.data.datasources.WLShopRemoteDataSource
+import dev.luiztm.wlshop.data.model.product.ProductsResponseItem
+import java.time.Clock
 
 
 /**
@@ -19,27 +21,28 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+
 class WLShopRepositoryImpl(
-    remoteDataSource: WLShopRemoteDataSource = WLShopRemoteDataSource(),
-    localDataSource: WLShopLocalDataSource = WLShopLocalDataSource()
+    private val remoteData: WLShopRemoteDataSource,
+    private val localData: WLShopLocalDataSource
 ) : WLShopRepository {
-    override fun getAllProducts(): Result<List<Any>> {
-        TODO("Not yet implemented")
-    }
 
-    override fun getAllCartProducts(): Result<List<Any>> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getAllProducts(): Result<List<ProductsResponseItem>> =
+        getAndCache("products") { remoteData.products() }
 
-    override fun getProductByID(id: Int): Result<Any> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getProductByID(id: Int): Result<ProductsResponseItem> =
+        getAndCache("productsByID") { remoteData.productsByID(id) }
 
-    override fun addCartProduct(id: Int): Result<Boolean> {
-        TODO("Not yet implemented")
-    }
-
-    override fun removeCartProduct(id: Int): Result<Boolean> {
-        TODO("Not yet implemented")
+    private suspend fun <T: Any> getAndCache(
+        key: String,
+        block: suspend () -> T
+    ): T {
+        return localData.get(key)?.let {
+            if (it.first + localData.expires > Clock.systemDefaultZone().millis()) {
+                it.second as T
+            } else {
+                block().also { response -> localData.set(key, response) }
+            }
+        } ?: block().also { localData.set(key, it) }
     }
 }

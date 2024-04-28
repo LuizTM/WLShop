@@ -1,5 +1,8 @@
 package dev.luiztm.wlshop.data.datasources
 
+import dev.luiztm.wlshop.data.model.product.ProductsResponseItem
+
+
 /**
 Copyright (C) 2024 LuizTM
 
@@ -15,5 +18,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-
-class WLShopRemoteDataSource
+interface WLShopRemoteDataSource{
+    suspend fun products(): Result<List<ProductsResponseItem>>
+    suspend fun productsByID(id: Int): Result<ProductsResponseItem>
+}

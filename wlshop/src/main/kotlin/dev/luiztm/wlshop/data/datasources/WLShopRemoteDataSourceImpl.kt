@@ -1,11 +1,7 @@
-package dev.luiztm.wlshop.view
+package dev.luiztm.wlshop.data.datasources
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import dev.luiztm.wlshop.R
-import dev.luiztm.wlshop.di.injectViewModel
-import dev.luiztm.wlshop.view.model.WLShopViewModel
-
+import dev.luiztm.sa_network.SANetwork
+import dev.luiztm.wlshop.data.model.product.ProductsResponseItem
 
 /**
 Copyright (C) 2024 LuizTM
@@ -22,11 +18,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-class WLShopActivity : AppCompatActivity(R.layout.wlshop_activity) {
 
-    private val viewmodel: WLShopViewModel by injectViewModel()
+class WLShopRemoteDataSourceImpl(private val saNetwork: SANetwork) : WLShopRemoteDataSource {
+    override suspend fun products(): Result<List<ProductsResponseItem>> =
+        saNetwork.makeRequest("products")
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    override suspend fun productsByID(id:Int): Result<ProductsResponseItem> =
+        saNetwork.makeRequest("products/$id")
 }

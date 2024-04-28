@@ -1,5 +1,6 @@
 package dev.luiztm.wlshop.data.datasources
 
+
 /**
 Copyright (C) 2024 LuizTM
 
@@ -15,4 +16,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-class WLShopLocalDataSource
+interface WLShopLocalDataSource {
+    val cache: HashMap<String, Pair<Long, Any>>
+    val expires: Long
+    fun get(key: String): Pair<Long, Any>?
+    fun <T: Any> set(key: String, value: T)
+    fun remove(key: String)
+    fun clear()
+}

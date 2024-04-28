@@ -1,11 +1,6 @@
-package dev.luiztm.wlshop.view
+package dev.luiztm.wlshop.data.datasources
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import dev.luiztm.wlshop.R
-import dev.luiztm.wlshop.di.injectViewModel
-import dev.luiztm.wlshop.view.model.WLShopViewModel
-
+import java.time.Clock
 
 /**
 Copyright (C) 2024 LuizTM
@@ -22,11 +17,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-class WLShopActivity : AppCompatActivity(R.layout.wlshop_activity) {
+class WLShopLocalDataSourceImpl(
+    override val cache: HashMap<String, Pair<Long, Any>> = hashMapOf(),
+    override val expires: Long = 5_000
+) : WLShopLocalDataSource {
 
-    private val viewmodel: WLShopViewModel by injectViewModel()
+    override fun get(key: String): Pair<Long, Any>? = cache[key]
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun <T: Any> set(key: String, value: T) {
+        cache[key] = Clock.systemDefaultZone().millis() to value
+    }
+
+    override fun remove(key: String) {
+        cache.remove(key)
+    }
+
+    override fun clear() {
+        cache.clear()
     }
 }

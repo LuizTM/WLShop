@@ -1,5 +1,7 @@
 package dev.luiztm.wlshop.data.repositories
 
+import dev.luiztm.wlshop.data.model.product.ProductsResponseItem
+
 
 /**
 Copyright (C) 2024 LuizTM
@@ -18,9 +20,9 @@ limitations under the License.
  */
 interface WLShopRepository {
 
-    fun getAllProducts(): Result<List<Any>>
-    fun getAllCartProducts(): Result<List<Any>>
-    fun getProductByID(id: Int): Result<Any>
-    fun addCartProduct(id: Int): Result<Boolean>
-    fun removeCartProduct(id: Int): Result<Boolean>
+    suspend fun getAllProducts(): Result<List<Any>>
+    suspend fun getProductByID(id: Int): Result<ProductsResponseItem>
+//    suspend fun getAllCartProducts(): Result<List<Any>>
+//    suspend fun addCartProduct(id: Int): Result<Boolean>
+//    suspend fun removeCartProduct(id: Int): Result<Boolean>
 }

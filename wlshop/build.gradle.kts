@@ -1,7 +1,6 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.android.library.setup)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -31,15 +30,19 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle.viewModel.ktx)
     implementation(libs.material)
+    implementation(libs.kotlinx.serialization.json)
 
     testImplementation(libs.junit4)
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.test.espresso.core)
+    testImplementation(libs.androidx.archcore.testing)
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.androidx.test.core.ktx)
-    testImplementation(libs.hamcrest)
+//    testImplementation(libs.hamcrest)
+    testImplementation(libs.google.truth)
     testImplementation(libs.androidx.test.ext)
     testImplementation(libs.androidx.test.rules)
+    testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.androidx.test.runner)
     testImplementation(libs.io.mockk)
     androidTestImplementation(libs.androidx.junit)
