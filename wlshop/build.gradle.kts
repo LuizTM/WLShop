@@ -25,12 +25,22 @@ dependencies {
     implementation(project(":shared:sa-network"))
     implementation(project(":shared:sa-data"))
 
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle.viewModel.ktx)
     implementation(libs.material)
     implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.coil.kt)
+
+    implementation(libs.androidx.navigation.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.moshi.converter)
 
     testImplementation(libs.junit4)
     testImplementation(libs.robolectric)

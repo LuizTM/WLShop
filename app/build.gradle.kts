@@ -40,6 +40,7 @@ dependencies {
     implementation(project(":shared:sa-analytics"))
     implementation(project(":shared:sa-network"))
     implementation(project(":shared:sa-data"))
+    implementation(project(":wlshop"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

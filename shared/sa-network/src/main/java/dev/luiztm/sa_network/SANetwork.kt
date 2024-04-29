@@ -17,5 +17,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 interface SANetwork {
-    suspend fun <T: Any> makeRequest(parameters: String): Result<T>
+    suspend fun makeRequest(parameters: String): Result<String>
 }

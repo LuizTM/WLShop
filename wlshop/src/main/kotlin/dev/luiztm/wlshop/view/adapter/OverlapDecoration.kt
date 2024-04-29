@@ -1,6 +1,9 @@
-package dev.luiztm.wlshop.data.repositories
+package dev.luiztm.wlshop.view.adapter
 
-import dev.luiztm.wlshop.data.model.product.ProductsResponseItem
+import android.graphics.Rect
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
 
 /**
@@ -18,11 +21,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-interface WLShopRepository {
 
-    suspend fun getAllProducts(): Result<List<ProductsResponseItem>>
-    suspend fun getProductByID(id: Int): Result<ProductsResponseItem>
-//    suspend fun getAllCartProducts(): Result<List<Any>>
-//    suspend fun addCartProduct(id: Int): Result<Boolean>
-//    suspend fun removeCartProduct(id: Int): Result<Boolean>
+class OverlapDecoration : ItemDecoration() {
+    private val overlapValue = -180
+    override fun getItemOffsets(outRect : Rect, view : View, parent : RecyclerView, state : RecyclerView.State) {
+        outRect.set(0, 0, 0, overlapValue)
+    }
 }

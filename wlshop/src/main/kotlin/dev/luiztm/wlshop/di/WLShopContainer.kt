@@ -1,7 +1,10 @@
 package dev.luiztm.wlshop.di
 
+import android.content.Context
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import dev.luiztm.sa_network.SANetwork
@@ -31,21 +34,35 @@ limitations under the License.
  */
 
 fun AppCompatActivity.injectViewModel(): Lazy<WLShopViewModel> {
-    val localDataSource = provideLocalDataSource()
-    val remoteDataSource = provideRemoteDataSource(provideSANetwork())
-    val repository = provideRepository(remoteDataSource, localDataSource)
-    return provideViewModel(repository)
+    return provideViewModel()
+}
+fun Fragment.injectViewModel(): Lazy<WLShopViewModel> {
+    return provideViewModel()
 }
 
-private fun AppCompatActivity.provideSANetwork() =
+private fun Context.provideSANetwork() =
     try {
         applicationContext as SANetwork
     } catch (ex: ClassCastException) {
         throw ClassCastException("The application must be implement SANetwork")
     }
 
-private fun AppCompatActivity.provideViewModel(repository: WLShopRepository): Lazy<WLShopViewModel> {
-    return viewModels { wlShopViewModelFactory(repository) }
+private fun AppCompatActivity.provideViewModel(): Lazy<WLShopViewModel> {
+    return viewModels {
+        val localDataSource = provideLocalDataSource()
+        val remoteDataSource = provideRemoteDataSource(provideSANetwork())
+        val repository = provideRepository(remoteDataSource, localDataSource)
+        wlShopViewModelFactory(repository)
+    }
+}
+
+private fun Fragment.provideViewModel(): Lazy<WLShopViewModel> {
+    return viewModels {
+        val localDataSource = provideLocalDataSource()
+        val remoteDataSource = provideRemoteDataSource(requireActivity().provideSANetwork())
+        val repository = provideRepository(remoteDataSource, localDataSource)
+        wlShopViewModelFactory(repository)
+    }
 }
 
 private fun provideRepository(

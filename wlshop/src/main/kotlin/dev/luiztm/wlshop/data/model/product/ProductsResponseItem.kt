@@ -12,3 +12,8 @@ data class ProductsResponseItem(
     val rating: Rating,
     val title: String
 )
+
+@Serializable
+data class Products(
+    val data: List<ProductsResponseItem>
+)

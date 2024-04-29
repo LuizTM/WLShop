@@ -1,9 +1,7 @@
 package dev.luiztm.shop.network
 
+import android.app.Application
 import dev.luiztm.sa_network.SANetwork
-import java.io.IOException
-import okhttp3.OkHttpClient
-import okhttp3.Request
 
 
 /**
@@ -21,18 +19,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-class NetworkManager(private val client: OkHttpClient = OkHttpClient()) : SANetwork {
-    override suspend fun makeRequest(parameters: String): Result<String> = runCatching {
-        run(parameters)
-    }
-
-    @Throws(IOException::class)
-    fun run(path: String): String {
-        val request: Request = Request.Builder()
-            .url("https://fakestoreapi.com/$path")
-            .build()
-        client.newCall(request).execute().use { response ->
-            return response.body!!.string()
-        }
+class ShopAppApplication : Application(),
+    SANetwork by NetworkManager() {
+    override fun onCreate() {
+        super.onCreate()
     }
 }

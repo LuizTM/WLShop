@@ -1,6 +1,4 @@
-package dev.luiztm.wlshop.data.repositories
-
-import dev.luiztm.wlshop.data.model.product.ProductsResponseItem
+package dev.luiztm.wlshop.view.fragments.routes
 
 
 /**
@@ -18,11 +16,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-interface WLShopRepository {
-
-    suspend fun getAllProducts(): Result<List<ProductsResponseItem>>
-    suspend fun getProductByID(id: Int): Result<ProductsResponseItem>
-//    suspend fun getAllCartProducts(): Result<List<Any>>
-//    suspend fun addCartProduct(id: Int): Result<Boolean>
-//    suspend fun removeCartProduct(id: Int): Result<Boolean>
+object NavigationRoutes {
+    const val home = "home"
+    const val plant_detail = "plant_detail"
+    const val plant_id = "plant_id"
+    const val plant_name = "plant_name"
 }

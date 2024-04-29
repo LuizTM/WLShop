@@ -1,7 +1,13 @@
 package dev.luiztm.wlshop.data.datasources
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.luiztm.sa_network.SANetwork
 import dev.luiztm.wlshop.data.model.product.ProductsResponseItem
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
+
 
 /**
 Copyright (C) 2024 LuizTM
@@ -21,8 +27,29 @@ limitations under the License.
 
 class WLShopRemoteDataSourceImpl(private val saNetwork: SANetwork) : WLShopRemoteDataSource {
     override suspend fun products(): Result<List<ProductsResponseItem>> =
-        saNetwork.makeRequest("products")
+        parseData(
+            saNetwork.makeRequest("products"),
+            Types.newParameterizedType(
+                List::class.java,
+                ProductsResponseItem::class.java
+            )
+        )
 
-    override suspend fun productsByID(id:Int): Result<ProductsResponseItem> =
-        saNetwork.makeRequest("products/$id")
+    override suspend fun productsByID(id: Int): Result<ProductsResponseItem> =
+        parseData(
+            saNetwork.makeRequest("products/$id"),
+            Types.newParameterizedType(
+                ProductsResponseItem::class.java
+            )
+        )
+
+    private inline fun <reified T> parseData(data: Result<String>, parameterizedType: ParameterizedType) =
+        runCatching {
+            val moshi = Moshi.Builder()
+                .add(KotlinJsonAdapterFactory())
+                .build()
+            val listOfCardsType: Type = parameterizedType
+            val jsonAdapter = moshi.adapter<T>(listOfCardsType)
+            jsonAdapter.fromJson(data.getOrThrow())!!
+        }
 }

@@ -2,9 +2,12 @@ package dev.luiztm.wlshop.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.createGraph
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.fragment
 import dev.luiztm.wlshop.R
-import dev.luiztm.wlshop.di.injectViewModel
-import dev.luiztm.wlshop.view.model.WLShopViewModel
+import dev.luiztm.wlshop.view.fragments.WLShopHomeFragment
+import dev.luiztm.wlshop.view.fragments.routes.NavigationRoutes
 
 
 /**
@@ -24,9 +27,26 @@ limitations under the License.
  */
 class WLShopActivity : AppCompatActivity(R.layout.wlshop_activity) {
 
-    private val viewmodel: WLShopViewModel by injectViewModel()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+
+        val navController = navHostFragment.navController
+        navController.graph = navController.createGraph(
+            startDestination = NavigationRoutes.home
+        ) {
+            fragment<WLShopHomeFragment>(NavigationRoutes.home) {
+                label = "Home"
+            }
+
+//            fragment<PlantDetailFragment>("${NavigationRoutes.plant_detail}/{${NavigationRoutes.plant_id}}") {
+//                label = resources.getString(R.string.plant_detail_title)
+//                argument(NavigationRoutes.plant_id) {
+//                    type = NavType.StringType
+//                }
+//            }
+        }
     }
 }
