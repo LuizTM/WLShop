@@ -23,7 +23,7 @@ limitations under the License.
  */
 
 class OverlapDecoration : ItemDecoration() {
-    private val overlapValue = -180
+    private val overlapValue = -190
     override fun getItemOffsets(outRect : Rect, view : View, parent : RecyclerView, state : RecyclerView.State) {
         outRect.set(0, 0, 0, overlapValue)
     }

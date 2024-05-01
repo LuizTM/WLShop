@@ -1,4 +1,6 @@
-package dev.luiztm.wlshop.view.fragments.routes
+package dev.luiztm.shop.analytics
+
+import dev.luiztm.sa_analytics.SAAnalytics
 
 
 /**
@@ -16,7 +18,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-object NavigationRoutes {
-    const val home = "home"
-    const val cart = "cart"
+class EngineOneAnalytics : SAAnalytics {
+    override fun trackAction(type: String, msg: String) {
+        println("From ${EngineOneAnalytics::class.simpleName} $type $msg")
+    }
+
+    override fun trackScreen(screenName: String) {
+        println("From ${EngineOneAnalytics::class.simpleName} $screenName")
+    }
 }

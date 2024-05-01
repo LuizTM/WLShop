@@ -25,6 +25,7 @@ class ProductsItemViewAdapter(
     private val dataSet: List<ProductsResponseItem>,
     private val itemViewClick: (ProductsResponseItem) -> Unit
 ) : RecyclerView.Adapter<ProductsItemViewAdapter.ViewHolder>() {
+
     override fun getItemCount() = dataSet.size
 
     class ViewHolder(val view: ProductsItemView) : RecyclerView.ViewHolder(view)
@@ -40,6 +41,7 @@ class ProductsItemViewAdapter(
             name = data.title,
             price = data.price.toString(),
             image = data.image,
+            rating = data.rating,
             click = { itemViewClick(data) }
         )
     }

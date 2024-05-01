@@ -27,12 +27,12 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 //@Config(sdk = [30])
-class WLShopActivityTest {
+class WLShopHostActivityTest {
 
     @Test
     fun initialActivityTest(){
         // GIVEN
-        val scenario = launchActivity<WLShopActivity>()
+        val scenario = launchActivity<WLShopHostActivity>()
 
         // WHEN
 //        scenario.moveToState(Lifecycle.State.CREATED)

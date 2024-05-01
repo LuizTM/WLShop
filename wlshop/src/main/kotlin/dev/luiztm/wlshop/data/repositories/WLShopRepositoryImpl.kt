@@ -33,16 +33,21 @@ class WLShopRepositoryImpl(
     override suspend fun getProductByID(id: Int): Result<ProductsResponseItem> =
         getAndCache("productsByID") { remoteData.productsByID(id) }
 
-    private suspend fun <T: Any> getAndCache(
+    private suspend fun <T : Any> getAndCache(
         key: String,
         block: suspend () -> T
     ): T {
         return localData.get(key)?.let {
             if (it.first + localData.expires > Clock.systemDefaultZone().millis()) {
+                println("WLShopRepositoryImpl ->> FROM CACHE")
                 it.second as T
             } else {
+                println("WLShopRepositoryImpl ->> NOT FROM CACHE")
                 block().also { response -> localData.set(key, response) }
             }
-        } ?: block().also { localData.set(key, it) }
+        } ?: block().also {
+            println("WLShopRepositoryImpl ->> NOT FROM CACHE")
+            localData.set(key, it)
+        }
     }
 }

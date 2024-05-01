@@ -1,5 +1,6 @@
 package dev.luiztm.wlshop.data.model.product
 
+import com.squareup.moshi.Json
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:layout_marginEnd="20dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginBottom="10dp"
+    tools:background="@android:color/holo_blue_light">
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/wlshop_nav_group_selected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:visibility="visible"
+        app:constraint_referenced_ids="wlshop_nav_bg_selected, wlshop_nav_label" />
+
+    <View
+        android:id="@+id/wlshop_nav_bg_selected"
+        android:layout_width="40dp"
+        android:layout_height="25dp"
+        android:background="@drawable/wlshop_nav_bg_corner"
+        app:layout_constraintBottom_toBottomOf="@id/wlshop_nav_img"
+        app:layout_constraintEnd_toEndOf="@id/wlshop_nav_img"
+        app:layout_constraintStart_toStartOf="@id/wlshop_nav_img"
+        app:layout_constraintTop_toTopOf="@id/wlshop_nav_img" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/wlshop_nav_img"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@id/wlshop_nav_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@drawable/ic_dashboard_black_24dp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/wlshop_nav_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:textAppearance="?attr/textAppearanceBodyLarge"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wlshop_nav_img"
+        tools:text="@string/title_cart" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

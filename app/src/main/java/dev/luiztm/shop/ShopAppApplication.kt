@@ -1,5 +1,12 @@
-package dev.luiztm.wlshop.view.fragments.routes
+package dev.luiztm.shop
 
+import android.app.Application
+import dev.luiztm.sa_analytics.SAAnalytics
+import dev.luiztm.sa_network.SANetwork
+import dev.luiztm.shop.analytics.AnalyticsManager
+import dev.luiztm.shop.analytics.EngineOneAnalytics
+import dev.luiztm.shop.analytics.EngineTwoAnalytics
+import dev.luiztm.shop.network.NetworkManager
 
 /**
 Copyright (C) 2024 LuizTM
@@ -16,7 +23,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-object NavigationRoutes {
-    const val home = "home"
-    const val cart = "cart"
-}
+
+class ShopAppApplication : Application(),
+    SANetwork by NetworkManager(),
+    SAAnalytics by AnalyticsManager(
+        EngineOneAnalytics(),
+        EngineTwoAnalytics()
+    )

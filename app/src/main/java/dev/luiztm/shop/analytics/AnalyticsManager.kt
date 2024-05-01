@@ -1,7 +1,6 @@
-package dev.luiztm.shop.network
+package dev.luiztm.shop.analytics
 
-import android.app.Application
-import dev.luiztm.sa_network.SANetwork
+import dev.luiztm.sa_analytics.SAAnalytics
 
 
 /**
@@ -19,9 +18,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-class ShopAppApplication : Application(),
-    SANetwork by NetworkManager() {
-    override fun onCreate() {
-        super.onCreate()
+class AnalyticsManager(
+    private vararg val engines: SAAnalytics =
+        arrayOf(EngineOneAnalytics(), EngineTwoAnalytics())
+) : SAAnalytics {
+    override fun trackAction(type: String, msg: String) {
+        engines.forEach {
+            it.trackAction(type, msg)
+        }
+    }
+
+    override fun trackScreen(screenName: String) {
+        engines.forEach {
+            it.trackScreen(screenName)
+        }
     }
 }

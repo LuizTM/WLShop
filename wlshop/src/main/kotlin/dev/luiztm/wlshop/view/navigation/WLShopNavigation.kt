@@ -1,4 +1,8 @@
-package dev.luiztm.wlshop.view.fragments.routes
+package dev.luiztm.wlshop.view.navigation
+
+import androidx.navigation.NavController
+import androidx.navigation.createGraph
+import dev.luiztm.wlshop.view.fragments.routes.NavigationRoutes
 
 
 /**
@@ -16,7 +20,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-object NavigationRoutes {
-    const val home = "home"
-    const val cart = "cart"
+
+fun NavController.setupRoutes(): NavController {
+    graph = createGraph(startDestination = NavigationRoutes.home) {
+        home()
+        cart()
+    }
+
+    return this
 }

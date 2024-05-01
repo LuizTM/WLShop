@@ -37,7 +37,6 @@ limitations under the License.
 class WLShopHomeFragment : Fragment(R.layout.wlshop_home_fragment) {
 
     private val viewmodel: WLShopViewModel by injectViewModel()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.wls_rv_home)
@@ -46,16 +45,18 @@ class WLShopHomeFragment : Fragment(R.layout.wlshop_home_fragment) {
         recyclerView.addItemDecoration(OverlapDecoration())
 
         observersRemoteData {
-            recyclerView.adapter = ProductsItemViewAdapter(it) {
-                Toast.makeText(
-                    view.context,
-                    "Clicouuu ${it.id} + ${it.title}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            recyclerView.adapter = ProductsItemViewAdapter(it, ::onClickProductItem)
         }
 
         viewmodel.getAllProducts()
+    }
+
+    private fun onClickProductItem(product: ProductsResponseItem) {
+        Toast.makeText(
+            view?.context,
+            "Clicouuu ${product.id} + ${product.title}",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     private fun observersRemoteData(setupView: (List<ProductsResponseItem>) -> Unit) {

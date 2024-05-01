@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import dev.luiztm.sa_network.SANetwork
+import dev.luiztm.sa_network.injectSANetwork
+import dev.luiztm.sa_network.provideSANetwork
 import dev.luiztm.wlshop.data.datasources.WLShopLocalDataSource
 import dev.luiztm.wlshop.data.datasources.WLShopLocalDataSourceImpl
 import dev.luiztm.wlshop.data.datasources.WLShopRemoteDataSource
@@ -40,13 +43,6 @@ fun Fragment.injectViewModel(): Lazy<WLShopViewModel> {
     return provideViewModel()
 }
 
-private fun Context.provideSANetwork() =
-    try {
-        applicationContext as SANetwork
-    } catch (ex: ClassCastException) {
-        throw ClassCastException("The application must be implement SANetwork")
-    }
-
 private fun AppCompatActivity.provideViewModel(): Lazy<WLShopViewModel> {
     return viewModels {
         val localDataSource = provideLocalDataSource()
@@ -57,7 +53,7 @@ private fun AppCompatActivity.provideViewModel(): Lazy<WLShopViewModel> {
 }
 
 private fun Fragment.provideViewModel(): Lazy<WLShopViewModel> {
-    return viewModels {
+    return activityViewModels {
         val localDataSource = provideLocalDataSource()
         val remoteDataSource = provideRemoteDataSource(requireActivity().provideSANetwork())
         val repository = provideRepository(remoteDataSource, localDataSource)
