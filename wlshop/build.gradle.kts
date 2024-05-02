@@ -33,6 +33,7 @@ dependencies {
     implementation(project(":shared:sa-analytics"))
     implementation(project(":shared:sa-network"))
     implementation(project(":shared:sa-data"))
+    implementation(project(":shared:ui-ds"))
 
 
     implementation(libs.androidx.core.ktx)

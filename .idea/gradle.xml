@@ -26,6 +26,7 @@
             <option value="$PROJECT_DIR$/shared/sa-analytics" />
             <option value="$PROJECT_DIR$/shared/sa-data" />
             <option value="$PROJECT_DIR$/shared/sa-network" />
+            <option value="$PROJECT_DIR$/shared/ui-ds" />
             <option value="$PROJECT_DIR$/wlshop" />
           </set>
         </option>
