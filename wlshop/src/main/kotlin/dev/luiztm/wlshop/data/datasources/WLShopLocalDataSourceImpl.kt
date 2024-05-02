@@ -21,7 +21,7 @@ limitations under the License.
  */
 class WLShopLocalDataSourceImpl(
     override val cache: HashMap<String, Pair<Long, Any>> = hashMapOf(),
-    override val expires: Long = 5_000,
+    override val expires: Long = 5_0000,
     private val dao: CartDAO,
 ) : WLShopLocalDataSource {
 
@@ -41,6 +41,14 @@ class WLShopLocalDataSourceImpl(
 
     override suspend fun addProduct(productId: Int) {
         dao.insertOrUpdate(CartEntity(productId = productId))
+    }
+
+    override suspend fun decreaseCartItem(productId: Int) {
+        dao.decreaseCartProductQuantity(productId)
+    }
+
+    override suspend fun increaseCartItem(productId: Int) {
+        dao.increaseCartProductQuantity(productId)
     }
 
     override suspend fun getAllCartProducts(): Result<List<CartEntity>> = runCatching {

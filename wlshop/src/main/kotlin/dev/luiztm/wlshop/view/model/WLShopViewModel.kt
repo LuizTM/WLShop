@@ -10,7 +10,9 @@ import dev.luiztm.wlshop.data.repositories.WLShopRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -43,15 +45,15 @@ class WLShopViewModel(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
-    private val _productItems: MutableSharedFlow<UIStateHome> = MutableSharedFlow()
-    val productItems = _productItems.stateIn(
+    private val _productItems: MutableSharedFlow<UIStateHome> = MutableStateFlow(UIStateHome.Loading)
+    val productItems = _productItems.shareIn(
         viewModelScope,
-        SharingStarted.WhileSubscribed(5_000),
-        UIStateHome.Loading
+        SharingStarted.WhileSubscribed(5_000)
     )
 
     fun getAllProducts() {
         viewModelScope.launch(dispatcher) {
+            _productItems.emit(UIStateHome.Loading)
             repository.getAllProducts()
                 .onSuccess {
                     _productItems.emit(UIStateHome.Success(it))
@@ -69,8 +71,21 @@ class WLShopViewModel(
         }
     }
 
+    fun increaseCartItem(productId: Int){
+        viewModelScope.launch(dispatcher) {
+            repository.increaseCartItem(productId)
+        }
+    }
+
+    fun decreaseCartItem(productId: Int){
+        viewModelScope.launch(dispatcher) {
+            repository.decreaseCartItem(productId)
+        }
+    }
+
     fun getAllCartProducts() {
         viewModelScope.launch(dispatcher) {
+            _productItems.emit(UIStateHome.Loading)
             repository.getAllCartProducts()
                 .onSuccess {
                     _productItems.emit(UIStateHome.SuccessCart(it))

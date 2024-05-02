@@ -26,6 +26,9 @@ interface WLShopRepository {
     suspend fun getProductByID(id: Int): Result<ProductsResponseItem>
     suspend fun addProductToCart(productId: Int)
     suspend fun getAllCartProducts(): Result<List<CartResponseItem>>
+    suspend fun increaseCartItem(productId: Int)
+    suspend fun decreaseCartItem(productId: Int)
+
 //    suspend fun addCartProduct(id: Int): Result<Boolean>
 //    suspend fun removeCartProduct(id: Int): Result<Boolean>
 }

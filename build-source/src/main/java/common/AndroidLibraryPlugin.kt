@@ -35,6 +35,8 @@ class AndroidLibraryPlugin : Plugin<Project> {
             apply("com.android.library")
             apply("org.jetbrains.kotlin.android")
             apply("com.google.devtools.ksp")
+            apply("maven-publish")
+            apply("jacoco")
         }
 
     }
@@ -48,6 +50,10 @@ class AndroidLibraryPlugin : Plugin<Project> {
         }
 
         buildTypes {
+            this.configureEach {
+//                enableAndroidTestCoverage = true
+                enableUnitTestCoverage = true
+            }
             release {
                 isMinifyEnabled = false
                 proguardFiles(
@@ -60,6 +66,7 @@ class AndroidLibraryPlugin : Plugin<Project> {
             sourceCompatibility = JavaVersion.VERSION_17
             targetCompatibility = JavaVersion.VERSION_17
         }
+
     }
 
 }

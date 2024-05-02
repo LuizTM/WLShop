@@ -28,9 +28,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+
+enum class TypeButton {
+    PLUS,
+    MINUS
+}
 class CartItemViewAdapter(
     private val dataSet: List<CartResponseItem>,
-    private val itemViewClick: (CartResponseItem) -> Unit
+    private val itemViewClick: (TypeButton, CartResponseItem) -> Unit
 ) : RecyclerView.Adapter<CartItemViewAdapter.ViewHolder>() {
 
     override fun getItemCount() = dataSet.size
@@ -57,11 +62,19 @@ class CartItemViewAdapter(
         with(viewHolder) {
             label.text = data.title
             category.text = data.category
-            price.text = data.price.toString()
+            price.text = (data.price * data.quantity).toString()
             quantity.text = data.quantity.toString()
             image.load(data.image) {
                 crossfade(true)
                 transformations(RoundedCornersTransformation(70f, 70f, 70f, 70f))
+            }
+
+            btnMinus.setOnClickListener {
+                itemViewClick(TypeButton.MINUS, data)
+            }
+
+            btnPlus.setOnClickListener {
+                itemViewClick(TypeButton.PLUS, data)
             }
         }
     }

@@ -2,12 +2,16 @@ package dev.luiztm.wlshop.view.fragments.home
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dev.luiztm.sa_analytics.SAAnalytics
+import dev.luiztm.sa_analytics.injectSAAnalytics
 import dev.luiztm.wlshop.R
 import dev.luiztm.wlshop.data.model.product.ProductsResponseItem
 import dev.luiztm.wlshop.di.injectActivityViewModel
@@ -36,8 +40,11 @@ limitations under the License.
 class WLShopHomeFragment : Fragment(R.layout.wlshop_home_fragment) {
 
     private val viewmodel: WLShopViewModel by injectActivityViewModel()
+    private val analytics: SAAnalytics by injectSAAnalytics()
+    private val progress: ProgressBar? by lazy { view?.findViewById(R.id.wlshop_home_progress) }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        analytics.trackScreen("WLShopHomeFragment")
         val recyclerView = view.findViewById<RecyclerView>(R.id.wls_rv_home)
 
         recyclerView.layoutManager = LinearLayoutManager(view.context)
@@ -52,6 +59,7 @@ class WLShopHomeFragment : Fragment(R.layout.wlshop_home_fragment) {
 
     private fun onClickProductItem(product: ProductsResponseItem) {
         viewmodel.addProductToCart(productId = product.id)
+        Toast.makeText(this.context, "Your item was sent to the cart!!", Toast.LENGTH_SHORT).show()
     }
 
     private fun observersRemoteData(setupView: (List<ProductsResponseItem>) -> Unit) {
@@ -60,11 +68,14 @@ class WLShopHomeFragment : Fragment(R.layout.wlshop_home_fragment) {
                 viewmodel.productItems.collect {
                     when (it) {
                         is UIStateHome.Success -> {
+                            progress?.visibility = View.GONE
                             setupView(it.data)
                         }
 
                         is UIStateHome.Error -> {}
-                        is UIStateHome.Loading -> {}
+                        is UIStateHome.Loading -> {
+                            progress?.visibility = View.VISIBLE
+                        }
                         else -> {}
                     }
                 }

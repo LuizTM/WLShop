@@ -19,6 +19,19 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:background="@android:drawable/ic_dialog_email" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/wlshop_product_buy"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:backgroundTint="?attr/colorOnPrimary"
+        android:background="@drawable/wlshop_ic_buy"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintBottom_toBottomOf="@id/wlshop_product_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/wlshop_product_image"/>
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wlshop_product_name"
         android:layout_width="match_parent"

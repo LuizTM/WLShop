@@ -25,8 +25,10 @@ fun AppCompatActivity.injectSAAnalytics(): Lazy<SAAnalytics> {
 }
 
 fun Fragment.injectSAAnalytics(): Lazy<SAAnalytics> {
-    val context = checkNotNull(context) { "context reference must not be null" }
-    return lazy { context.provideSAAnalytics() }
+    return lazy {
+        val context = checkNotNull(context) { "context reference must not be null" }
+        context.provideSAAnalytics()
+    }
 }
 
 fun Context.provideSAAnalytics() =

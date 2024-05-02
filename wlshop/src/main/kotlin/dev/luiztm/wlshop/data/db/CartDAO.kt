@@ -35,20 +35,20 @@ interface CartDAO {
     suspend fun deleteProduct(product: CartEntity)
 
     @Query("UPDATE cart_table SET quantity = quantity + 1 WHERE product_id = :productId")
-    suspend fun increaseBasketProductQuantity(productId: Int)
+    suspend fun increaseCartProductQuantity(productId: Int)
 
     @Query("UPDATE cart_table SET quantity = quantity - 1 WHERE product_id = :productId")
-    suspend fun decreaseBasketProductQuantity(productId: Int)
+    suspend fun decreaseCartProductQuantity(productId: Int)
 
     @Query("SELECT quantity FROM cart_table WHERE product_id = :productId")
     @Transaction
-    suspend fun getBasketProductQuantity(productId: Long): Int
+    suspend fun getCartProductQuantity(productId: Long): Int
 
     @Transaction
     suspend fun insertOrUpdate(model: CartEntity): Long {
         val id = addProduct(model)
         return if (id==-1L) {
-            increaseBasketProductQuantity(model.productId)
+            increaseCartProductQuantity(model.productId)
             model.productId.toLong()
         } else {
             id

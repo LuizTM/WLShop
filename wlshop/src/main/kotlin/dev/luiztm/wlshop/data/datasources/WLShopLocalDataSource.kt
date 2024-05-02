@@ -26,5 +26,8 @@ interface WLShopLocalDataSource {
     fun remove(key: String)
     fun clear()
     suspend fun addProduct(productId: Int)
+
+    suspend fun increaseCartItem(productId: Int)
+    suspend fun decreaseCartItem(productId: Int)
     suspend fun getAllCartProducts(): Result<List<CartEntity>>
 }

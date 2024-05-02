@@ -1,7 +1,10 @@
+import com.android.build.gradle.internal.tasks.factory.dependsOn
+
 plugins {
     alias(libs.plugins.android.library.setup)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.android)
+    id("org.jetbrains.kotlinx.kover")
 }
 
 android {

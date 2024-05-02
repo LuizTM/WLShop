@@ -94,7 +94,7 @@ class WLShopRepositoryImplTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `getProductByID from API when cache is expired`() = runTest {
-        mockLocalDataSourceAPIAndCache("productsByID", ::stubProductByID)
+        mockLocalDataSourceAPIAndCache("productsByID1", ::stubProductByID)
         repository.getProductByID(1)
 
         coVerifyOrder {
@@ -107,7 +107,7 @@ class WLShopRepositoryImplTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `getProductByID from cache`() = runTest {
-        mockLocalDataSourceCache("productsByID", ::stubProductByID)
+        mockLocalDataSourceCache("productsByID1", ::stubProductByID)
         repository.getProductByID(1)
         verify(exactly = 1) { mockLocal.get(any()) }
         verify(exactly = 0) { mockLocal.set(any(), any()) }

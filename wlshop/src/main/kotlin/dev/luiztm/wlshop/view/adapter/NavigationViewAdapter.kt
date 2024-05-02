@@ -43,11 +43,7 @@ class NavigationViewAdapter(
 
     override fun getItemCount() = dataSet.size
 
-    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        fun selectedItem(view: View, visibility: Int) {
-            view.findViewById<Group>(R.id.wlshop_nav_group_selected).visibility = visibility
-        }
-    }
+    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
@@ -55,14 +51,14 @@ class NavigationViewAdapter(
         return ViewHolder(view)
     }
 
+    private fun selectedItem(view: View, visibility: Int) {
+        view.findViewById<Group>(R.id.wlshop_nav_group_selected).visibility = visibility
+    }
+
     private fun updateItemSelected(position: Int) {
         _lastSelectedPosition = _selectedPosition
         _selectedPosition = position
         notifyItemRangeChanged(0, itemCount)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
-        super.onBindViewHolder(holder, position, payloads)
     }
 
     fun onBackSelection() {
@@ -75,7 +71,7 @@ class NavigationViewAdapter(
         val icon: AppCompatImageView = viewHolder.view.findViewById(R.id.wlshop_nav_img)
         val label: TextView = viewHolder.view.findViewById(R.id.wlshop_nav_label)
 
-        viewHolder.selectedItem(
+        selectedItem(
             viewHolder.view,
             if (_selectedPosition != position) View.GONE else View.VISIBLE
         )
@@ -83,7 +79,7 @@ class NavigationViewAdapter(
         icon.setImageResource(data.icon)
         label.text = data.label
 
-        viewHolder.itemView.setOnClickListener {
+        viewHolder.view.setOnClickListener {
             itemViewClick(data)
             updateItemSelected(position)
         }

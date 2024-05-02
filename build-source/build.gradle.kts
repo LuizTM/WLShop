@@ -25,11 +25,5 @@ gradlePlugin {
 
 dependencies {
     compileOnly(libs.android.gradlePlugin)
-//    compileOnly(libs.android.tools.common)
-//    compileOnly(libs.firebase.crashlytics.gradlePlugin)
-//    compileOnly(libs.firebase.performance.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
-//    compileOnly(libs.ksp.gradlePlugin)
-//    compileOnly(libs.room.gradlePlugin)
-//    implementation(libs.truth)
 }

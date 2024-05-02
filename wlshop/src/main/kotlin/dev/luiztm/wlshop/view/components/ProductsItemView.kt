@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
+import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatImageView
@@ -45,6 +46,7 @@ class ProductsItemView @JvmOverloads constructor(
     private val _image: AppCompatImageView by lazy { findViewById(R.id.wlshop_product_image) }
     private val _ratingStart: AppCompatRatingBar by lazy { findViewById(R.id.wlshop_rating_start) }
     private val _ratingValue: TextView by lazy { findViewById(R.id.wlshop_rating_value) }
+    private val _btnBuy: Button by lazy { findViewById(R.id.wlshop_product_buy) }
 
     init {
         inflate(context, R.layout.wlshop_products_item_view, this)
@@ -73,7 +75,7 @@ class ProductsItemView @JvmOverloads constructor(
             crossfade(true)
             transformations(RoundedCornersTransformation(70f, 70f, 70f, 70f))
         }
-        setOnClickListener { click() }
+        _btnBuy.setOnClickListener { click() }
     }
 
     private fun TextView.labelsConfig(@ColorInt textColor:Int, label:String){

@@ -53,6 +53,14 @@ class WLShopRepositoryImpl(
         }
     }
 
+    override suspend fun decreaseCartItem(productId: Int) {
+        localData.decreaseCartItem(productId)
+    }
+
+    override suspend fun increaseCartItem(productId: Int) {
+        localData.increaseCartItem(productId)
+    }
+
     private suspend fun <T : Any> getAndCache(
         key: String,
         block: suspend () -> T

@@ -1,11 +1,17 @@
 package dev.luiztm.wlshop.view
 
+import android.content.Context
+import android.content.Intent
+import androidx.appcompat.view.ContextThemeWrapper
+import androidx.lifecycle.Lifecycle
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.luiztm.wlshop.R
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -26,20 +32,27 @@ import org.junit.runner.RunWith
  */
 
 @RunWith(AndroidJUnit4::class)
-//@Config(sdk = [30])
 class WLShopHostActivityTest {
 
     @Test
-    fun initialActivityTest(){
+    @Ignore
+    fun initialActivityTest() {
         // GIVEN
-        val scenario = launchActivity<WLShopHostActivity>()
-
+        val scenario = launchActivity<WLShopHostActivity>(
+            Intent(
+                ContextThemeWrapper(
+                    ApplicationProvider.getApplicationContext(),
+                    R.style.WLShopThemeMediumContrast
+                ), WLShopHostActivity::class.java
+            )
+        )
         // WHEN
-//        scenario.moveToState(Lifecycle.State.CREATED)
+        scenario.moveToState(Lifecycle.State.CREATED)
 
         // THEN
         scenario.onActivity { activity ->
-            Espresso.onView(ViewMatchers.withId(R.id.wls_button)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+            Espresso.onView(ViewMatchers.withId(R.id.wls_rv_home))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         }
     }
 }

@@ -23,9 +23,12 @@ limitations under the License.
 fun AppCompatActivity.injectSANetwork(): Lazy<SANetwork> {
     return lazy { provideSANetwork() }
 }
+
 fun Fragment.injectSANetwork(): Lazy<SANetwork?> {
-    val context = checkNotNull(context) { "context reference must not be null" }
-    return lazy { context.provideSANetwork() }
+    return lazy {
+        val context = checkNotNull(context) { "context reference must not be null" }
+        context.provideSANetwork()
+    }
 }
 
 fun Context.provideSANetwork() =

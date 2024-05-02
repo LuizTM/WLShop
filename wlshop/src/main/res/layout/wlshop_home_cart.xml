@@ -3,6 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ProgressBar
+        android:id="@+id/wlshop_cart_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminateTint="?attr/colorOnPrimary"
+        android:visibility="visible"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/wls_rv_cart"
         android:layout_width="match_parent"
