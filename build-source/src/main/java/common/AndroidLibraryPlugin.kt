@@ -34,6 +34,7 @@ class AndroidLibraryPlugin : Plugin<Project> {
         pluginManager.apply {
             apply("com.android.library")
             apply("org.jetbrains.kotlin.android")
+            apply("com.google.devtools.ksp")
         }
 
     }
@@ -56,8 +57,8 @@ class AndroidLibraryPlugin : Plugin<Project> {
             }
         }
         compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_1_8
-            targetCompatibility = JavaVersion.VERSION_1_8
+            sourceCompatibility = JavaVersion.VERSION_17
+            targetCompatibility = JavaVersion.VERSION_17
         }
     }
 

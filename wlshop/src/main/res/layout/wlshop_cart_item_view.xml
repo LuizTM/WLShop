@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_margin="6dp"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimaryInverse">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/wlshop_cart_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@android:drawable/ic_dialog_email" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/wlshop_cart_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:ellipsize="end"
+            android:maxLength="30"
+            android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintStart_toEndOf="@id/wlshop_cart_image"
+            app:layout_constraintTop_toTopOf="@id/wlshop_cart_image"
+            tools:text="Fjallraven - Foldsack Foldsack Foldsack Foldsack" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/wlshop_cart_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:ellipsize="end"
+            android:maxLength="30"
+            android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            app:layout_constraintBottom_toBottomOf="@id/wlshop_cart_image"
+            app:layout_constraintStart_toEndOf="@id/wlshop_cart_image"
+            app:layout_constraintTop_toBottomOf="@id/wlshop_cart_name"
+            app:layout_constraintVertical_bias="0"
+            tools:text="Eletronic" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/wlshop_cart_price_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:ellipsize="end"
+            android:maxLength="30"
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            app:layout_constraintBottom_toBottomOf="@id/wlshop_cart_image"
+            app:layout_constraintStart_toEndOf="@id/wlshop_cart_image"
+            app:layout_constraintTop_toBottomOf="@id/wlshop_cart_category"
+            app:layout_constraintVertical_bias="0.3"
+            tools:text="$" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/wlshop_cart_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLength="30"
+            android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/wlshop_cart_image"
+            app:layout_constraintStart_toEndOf="@id/wlshop_cart_price_symbol"
+            app:layout_constraintTop_toBottomOf="@id/wlshop_cart_category"
+            app:layout_constraintVertical_bias="0.4"
+            tools:text="20.92" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/wlshop_cart_plus"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/wlshop_bottom_nav_bg_corner"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:gravity="center_horizontal"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/wlshop_cart_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toEndOf="@+id/wlshop_cart_image"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textStyle="bold"
+            android:text="+" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/wlshop_cart_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+            app:layout_constraintBottom_toBottomOf="@id/wlshop_cart_minus"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toEndOf="@+id/wlshop_cart_image"
+            app:layout_constraintTop_toTopOf="@id/wlshop_cart_plus"
+            tools:text="1" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/wlshop_cart_minus"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/wlshop_bottom_nav_bg_corner"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:text="\u2212"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toEndOf="@+id/wlshop_cart_image"
+            app:layout_constraintTop_toBottomOf="@+id/wlshop_cart_value" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

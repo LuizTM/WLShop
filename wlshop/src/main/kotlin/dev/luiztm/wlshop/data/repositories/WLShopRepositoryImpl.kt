@@ -2,6 +2,7 @@ package dev.luiztm.wlshop.data.repositories
 
 import dev.luiztm.wlshop.data.datasources.WLShopLocalDataSource
 import dev.luiztm.wlshop.data.datasources.WLShopRemoteDataSource
+import dev.luiztm.wlshop.data.model.cart.CartResponseItem
 import dev.luiztm.wlshop.data.model.product.ProductsResponseItem
 import java.time.Clock
 
@@ -31,7 +32,26 @@ class WLShopRepositoryImpl(
         getAndCache("products") { remoteData.products() }
 
     override suspend fun getProductByID(id: Int): Result<ProductsResponseItem> =
-        getAndCache("productsByID") { remoteData.productsByID(id) }
+        getAndCache("productsByID$id") { remoteData.productsByID(id) }
+
+    override suspend fun addProductToCart(productId: Int) {
+        localData.addProduct(productId)
+    }
+
+    override suspend fun getAllCartProducts(): Result<List<CartResponseItem>> = runCatching {
+        val list = localData.getAllCartProducts()
+        list.getOrNull()!!.map {
+            val product = getProductByID(it.productId).getOrThrow()
+            CartResponseItem(
+                id = it.productId,
+                image = product.image,
+                price = product.price,
+                title = product.title,
+                category = product.category,
+                quantity = it.quantity,
+            )
+        }
+    }
 
     private suspend fun <T : Any> getAndCache(
         key: String,

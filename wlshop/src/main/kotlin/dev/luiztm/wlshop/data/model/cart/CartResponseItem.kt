@@ -4,9 +4,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CartResponseItem(
-    val __v: Int,
-    val date: String,
-    val id: Int,
-    val products: List<Product>,
-    val userId: Int
+    val id: Int = 0,
+    val category: String,
+    val image: String,
+    val price: Double,
+    val title: String,
+    val quantity:Int
 )

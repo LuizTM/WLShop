@@ -1,17 +1,16 @@
 package dev.luiztm.wlshop.data.model.product
 
-import com.squareup.moshi.Json
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class ProductsResponseItem(
-    val category: String,
     val description: String,
     val id: Int,
+    val category: String,
     val image: String,
     val price: Double,
+    val title: String,
     val rating: Rating,
-    val title: String
 )
 
 @Serializable

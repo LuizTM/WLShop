@@ -6,7 +6,7 @@ android {
     namespace = "dev.luiztm.sa_network"
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 

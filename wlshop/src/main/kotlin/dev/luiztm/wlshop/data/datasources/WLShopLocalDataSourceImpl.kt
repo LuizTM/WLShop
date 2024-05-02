@@ -1,5 +1,7 @@
 package dev.luiztm.wlshop.data.datasources
 
+import dev.luiztm.wlshop.data.db.CartDAO
+import dev.luiztm.wlshop.data.db.CartEntity
 import java.time.Clock
 
 /**
@@ -19,12 +21,13 @@ limitations under the License.
  */
 class WLShopLocalDataSourceImpl(
     override val cache: HashMap<String, Pair<Long, Any>> = hashMapOf(),
-    override val expires: Long = 5_000
+    override val expires: Long = 5_000,
+    private val dao: CartDAO,
 ) : WLShopLocalDataSource {
 
     override fun get(key: String): Pair<Long, Any>? = cache[key]
 
-    override fun <T: Any> set(key: String, value: T) {
+    override fun <T : Any> set(key: String, value: T) {
         cache[key] = Clock.systemDefaultZone().millis() to value
     }
 
@@ -34,5 +37,13 @@ class WLShopLocalDataSourceImpl(
 
     override fun clear() {
         cache.clear()
+    }
+
+    override suspend fun addProduct(productId: Int) {
+        dao.insertOrUpdate(CartEntity(productId = productId))
+    }
+
+    override suspend fun getAllCartProducts(): Result<List<CartEntity>> = runCatching {
+        dao.getAllProduct()
     }
 }

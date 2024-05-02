@@ -40,6 +40,7 @@ class WLShopRemoteDataSourceImpl(private val saNetwork: SANetwork) : WLShopRemot
         parseData(
             saNetwork.makeRequest("products/$id"),
             Types.newParameterizedType(
+                ProductsResponseItem::class.java,
                 ProductsResponseItem::class.java
             )
         )

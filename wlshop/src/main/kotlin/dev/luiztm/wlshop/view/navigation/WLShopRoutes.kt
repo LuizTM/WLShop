@@ -2,8 +2,8 @@ package dev.luiztm.wlshop.view.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.fragment.fragment
-import dev.luiztm.wlshop.view.fragments.CartFragment
-import dev.luiztm.wlshop.view.fragments.WLShopHomeFragment
+import dev.luiztm.wlshop.view.fragments.cart.CartFragment
+import dev.luiztm.wlshop.view.fragments.home.WLShopHomeFragment
 import dev.luiztm.wlshop.view.fragments.routes.NavigationRoutes
 
 

@@ -1,8 +1,7 @@
-package dev.luiztm.wlshop.view.fragments
+package dev.luiztm.wlshop.view.fragments.home
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -11,9 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.luiztm.wlshop.R
 import dev.luiztm.wlshop.data.model.product.ProductsResponseItem
-import dev.luiztm.wlshop.di.injectViewModel
-import dev.luiztm.wlshop.view.adapter.OverlapDecoration
-import dev.luiztm.wlshop.view.adapter.ProductsItemViewAdapter
+import dev.luiztm.wlshop.di.injectActivityViewModel
+import dev.luiztm.wlshop.view.fragments.home.adapter.OverlapDecoration
+import dev.luiztm.wlshop.view.fragments.home.adapter.ProductsItemViewAdapter
 import dev.luiztm.wlshop.view.model.UIStateHome
 import dev.luiztm.wlshop.view.model.WLShopViewModel
 import kotlinx.coroutines.launch
@@ -36,7 +35,7 @@ limitations under the License.
  */
 class WLShopHomeFragment : Fragment(R.layout.wlshop_home_fragment) {
 
-    private val viewmodel: WLShopViewModel by injectViewModel()
+    private val viewmodel: WLShopViewModel by injectActivityViewModel()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.wls_rv_home)
@@ -52,11 +51,7 @@ class WLShopHomeFragment : Fragment(R.layout.wlshop_home_fragment) {
     }
 
     private fun onClickProductItem(product: ProductsResponseItem) {
-        Toast.makeText(
-            view?.context,
-            "Clicouuu ${product.id} + ${product.title}",
-            Toast.LENGTH_SHORT
-        ).show()
+        viewmodel.addProductToCart(productId = product.id)
     }
 
     private fun observersRemoteData(setupView: (List<ProductsResponseItem>) -> Unit) {
@@ -70,6 +65,7 @@ class WLShopHomeFragment : Fragment(R.layout.wlshop_home_fragment) {
 
                         is UIStateHome.Error -> {}
                         is UIStateHome.Loading -> {}
+                        else -> {}
                     }
                 }
             }

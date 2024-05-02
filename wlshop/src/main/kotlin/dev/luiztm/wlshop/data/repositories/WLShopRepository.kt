@@ -1,5 +1,7 @@
 package dev.luiztm.wlshop.data.repositories
 
+import dev.luiztm.wlshop.data.db.CartEntity
+import dev.luiztm.wlshop.data.model.cart.CartResponseItem
 import dev.luiztm.wlshop.data.model.product.ProductsResponseItem
 
 
@@ -22,7 +24,8 @@ interface WLShopRepository {
 
     suspend fun getAllProducts(): Result<List<ProductsResponseItem>>
     suspend fun getProductByID(id: Int): Result<ProductsResponseItem>
-//    suspend fun getAllCartProducts(): Result<List<Any>>
+    suspend fun addProductToCart(productId: Int)
+    suspend fun getAllCartProducts(): Result<List<CartResponseItem>>
 //    suspend fun addCartProduct(id: Int): Result<Boolean>
 //    suspend fun removeCartProduct(id: Int): Result<Boolean>
 }

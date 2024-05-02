@@ -1,6 +1,9 @@
-package dev.luiztm.wlshop.data.datasources
+package dev.luiztm.wlshop.view.fragments.home.adapter
 
-import dev.luiztm.wlshop.data.db.CartEntity
+import android.graphics.Rect
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
 
 /**
@@ -18,13 +21,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-interface WLShopLocalDataSource {
-    val cache: HashMap<String, Pair<Long, Any>>
-    val expires: Long
-    fun get(key: String): Pair<Long, Any>?
-    fun <T: Any> set(key: String, value: T)
-    fun remove(key: String)
-    fun clear()
-    suspend fun addProduct(productId: Int)
-    suspend fun getAllCartProducts(): Result<List<CartEntity>>
+
+class OverlapDecoration : ItemDecoration() {
+    private val overlapValue = -190
+    override fun getItemOffsets(outRect : Rect, view : View, parent : RecyclerView, state : RecyclerView.State) {
+        outRect.set(0, 0, 0, overlapValue)
+    }
 }

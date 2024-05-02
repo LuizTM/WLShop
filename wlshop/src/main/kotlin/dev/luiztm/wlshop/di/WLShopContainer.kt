@@ -5,16 +5,16 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.room.Room
 import dev.luiztm.sa_network.SANetwork
-import dev.luiztm.sa_network.injectSANetwork
 import dev.luiztm.sa_network.provideSANetwork
 import dev.luiztm.wlshop.data.datasources.WLShopLocalDataSource
 import dev.luiztm.wlshop.data.datasources.WLShopLocalDataSourceImpl
 import dev.luiztm.wlshop.data.datasources.WLShopRemoteDataSource
 import dev.luiztm.wlshop.data.datasources.WLShopRemoteDataSourceImpl
+import dev.luiztm.wlshop.data.db.WLShopDataBase
 import dev.luiztm.wlshop.data.repositories.WLShopRepository
 import dev.luiztm.wlshop.data.repositories.WLShopRepositoryImpl
 import dev.luiztm.wlshop.view.model.WLShopViewModel
@@ -39,7 +39,8 @@ limitations under the License.
 fun AppCompatActivity.injectViewModel(): Lazy<WLShopViewModel> {
     return provideViewModel()
 }
-fun Fragment.injectViewModel(): Lazy<WLShopViewModel> {
+
+fun Fragment.injectActivityViewModel(): Lazy<WLShopViewModel> {
     return provideViewModel()
 }
 
@@ -54,7 +55,7 @@ private fun AppCompatActivity.provideViewModel(): Lazy<WLShopViewModel> {
 
 private fun Fragment.provideViewModel(): Lazy<WLShopViewModel> {
     return activityViewModels {
-        val localDataSource = provideLocalDataSource()
+        val localDataSource = requireActivity().provideLocalDataSource()
         val remoteDataSource = provideRemoteDataSource(requireActivity().provideSANetwork())
         val repository = provideRepository(remoteDataSource, localDataSource)
         wlShopViewModelFactory(repository)
@@ -71,8 +72,13 @@ private fun provideRepository(
 private fun provideRemoteDataSource(saNetwork: SANetwork): WLShopRemoteDataSource =
     WLShopRemoteDataSourceImpl(saNetwork)
 
-private fun provideLocalDataSource(): WLShopLocalDataSource =
-    WLShopLocalDataSourceImpl()
+private fun Context.provideLocalDataSource(): WLShopLocalDataSource {
+    val roomDatabase = Room.databaseBuilder(
+        applicationContext, WLShopDataBase::class.java, "cart-database"
+    ).fallbackToDestructiveMigration().build()
+
+    return WLShopLocalDataSourceImpl(dao = roomDatabase.cartDao())
+}
 
 private fun wlShopViewModelFactory(repository: WLShopRepository) = viewModelFactory {
     initializer { WLShopViewModel(repository) }

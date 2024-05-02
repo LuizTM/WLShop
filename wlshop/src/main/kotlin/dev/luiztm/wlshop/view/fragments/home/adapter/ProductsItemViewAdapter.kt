@@ -1,4 +1,4 @@
-package dev.luiztm.wlshop.view.adapter
+package dev.luiztm.wlshop.view.fragments.home.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

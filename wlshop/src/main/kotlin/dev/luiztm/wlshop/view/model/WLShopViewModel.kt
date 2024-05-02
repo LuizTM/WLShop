@@ -3,6 +3,8 @@ package dev.luiztm.wlshop.view.model
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.luiztm.wlshop.data.model.cart.CartResponseItem
+import dev.luiztm.wlshop.data.model.cart.Product
 import dev.luiztm.wlshop.data.model.product.ProductsResponseItem
 import dev.luiztm.wlshop.data.repositories.WLShopRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -31,8 +33,9 @@ limitations under the License.
 
 sealed interface UIStateHome {
     data class Success(val data: List<ProductsResponseItem>) : UIStateHome
-    data object Loading : UIStateHome
-    data object Error : UIStateHome
+    data class SuccessCart(val data: List<CartResponseItem>) : UIStateHome
+    object Loading : UIStateHome
+    object Error : UIStateHome
 }
 
 class WLShopViewModel(
@@ -52,6 +55,25 @@ class WLShopViewModel(
             repository.getAllProducts()
                 .onSuccess {
                     _productItems.emit(UIStateHome.Success(it))
+                }
+                .onFailure {
+                    Log.e("WLShopViewModel", it.message, it)
+                    _productItems.emit(UIStateHome.Error)
+                }
+        }
+    }
+
+    fun addProductToCart(productId: Int){
+        viewModelScope.launch(dispatcher) {
+            repository.addProductToCart(productId)
+        }
+    }
+
+    fun getAllCartProducts() {
+        viewModelScope.launch(dispatcher) {
+            repository.getAllCartProducts()
+                .onSuccess {
+                    _productItems.emit(UIStateHome.SuccessCart(it))
                 }
                 .onFailure {
                     Log.e("WLShopViewModel", it.message, it)

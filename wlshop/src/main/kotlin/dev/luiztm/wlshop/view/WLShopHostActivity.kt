@@ -7,9 +7,11 @@ import androidx.navigation.findNavController
 import dev.luiztm.sa_analytics.SAAnalytics
 import dev.luiztm.sa_analytics.injectSAAnalytics
 import dev.luiztm.wlshop.R
+import dev.luiztm.wlshop.di.injectViewModel
 import dev.luiztm.wlshop.view.adapter.NavigationItem
 import dev.luiztm.wlshop.view.components.BottomNavigationView
 import dev.luiztm.wlshop.view.fragments.routes.NavigationRoutes
+import dev.luiztm.wlshop.view.model.WLShopViewModel
 import dev.luiztm.wlshop.view.navigation.setupRoutes
 
 /**
@@ -39,6 +41,7 @@ class WLShopHostActivity : AppCompatActivity(R.layout.wlshop_activity) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        injectViewModel()
         analytics.trackScreen("WLShopHostActivity")
 
         navController.setupRoutes()

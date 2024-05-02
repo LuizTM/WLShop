@@ -1,9 +1,8 @@
-package dev.luiztm.wlshop.view.adapter
+package dev.luiztm.wlshop.data.db
 
-import android.graphics.Rect
-import android.view.View
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 
 
 /**
@@ -21,10 +20,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-
-class OverlapDecoration : ItemDecoration() {
-    private val overlapValue = -190
-    override fun getItemOffsets(outRect : Rect, view : View, parent : RecyclerView, state : RecyclerView.State) {
-        outRect.set(0, 0, 0, overlapValue)
-    }
+@Database(entities = [CartEntity::class], version = 1, exportSchema = false)
+abstract class WLShopDataBase: RoomDatabase() {
+    abstract fun cartDao(): CartDAO
 }

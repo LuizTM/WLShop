@@ -11,19 +11,17 @@ android {
     resourcePrefix("wlshop")
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 
     testOptions {
         unitTests.isReturnDefaultValues = true
         unitTests.isIncludeAndroidResources = true
     }
-    buildFeatures {
-        viewBinding = true
-    }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -52,13 +50,15 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.lifecycle.livedata.ktx)
 
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+
     testImplementation(libs.junit4)
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.test.espresso.core)
     testImplementation(libs.androidx.archcore.testing)
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.androidx.test.core.ktx)
-//    testImplementation(libs.hamcrest)
     testImplementation(libs.google.truth)
     testImplementation(libs.androidx.test.ext)
     testImplementation(libs.androidx.test.rules)
